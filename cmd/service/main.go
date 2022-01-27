@@ -1,21 +1,30 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/kokhno-nikolay/lets-go-chat/pkg/hasher"
-	"log"
 )
 
 func main() {
-	secretKey := "124351512"
-	pass := "12341241"
+	secretKey := "47H37P6dRfN66DLy5rCA3sP37xdzdXkh"
+	pass := "some-random-password"
 
+	fmt.Printf("PASSWORD: %s\n", pass)
+	fmt.Printf("SECRET KEY: %s\n", secretKey)
+
+	fmt.Println("HASHING PASSWORD...")
 	h := hasher.NewHasher(secretKey)
-	hashPass, err := h.HashPassword(pass)
+	hash, err := h.HashPassword(pass)
 	if err != nil {
-		log.Fatalf(err.Error())
+		panic(err.Error())
 	}
+	fmt.Printf("HASH: %s\n", hash)
 
-	if checkPass := hr.CheckHashPassword(pass, hashPass); checkPass {
-		log.Println("password is correct")
+	fmt.Println("CHECKING HASH PASSWORD...")
+	if checkPass := h.CheckHashPassword(pass, hash); checkPass {
+		fmt.Println("SUCCESS! PASSWORD IS CORRECT.")
+	} else {
+		fmt.Println("FAILED! PASSWORD AND HASH DO NOT MATCH.")
 	}
 }
