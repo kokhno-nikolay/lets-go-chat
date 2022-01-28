@@ -3,7 +3,7 @@
   Let's Go Chat
 </h1>
 
-<p align="center"><a href="https://pkg.go.dev/github.com/create-go-app/cli/v3?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.17+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" /></p>
+<p align="center"><a href="https://pkg.go.dev/github.com/create-go-app/cli/v3?tab=doc" target="_blank"><img src="https://img.shields.io/badge/Go-1.17+-00ADD8?style=for-the-badge&logo=go" alt="go version" /></a>&nbsp;<img src="https://img.shields.io/badge/license-apache_2.0-red?style=for-the-badge&logo=none" alt="license" />&nbsp;<a href="https://pkg.go.dev/github.com/kokhno-nikolay/lets-go-chat"><img src="https://pkg.go.dev/badge/github.com/kokhno-nikolay/lets-go-chat.svg" alt="Go Reference"></a></p>
 
 ## ⚡ Quick start
 First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.17` or higher is required.
