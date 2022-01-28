@@ -1,3 +1,4 @@
+/* Packet hasher provides hashing and password hash comparison. */
 package hasher
 
 type Hasher interface {
