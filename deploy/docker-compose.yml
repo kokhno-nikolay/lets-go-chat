@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14.1
+    container_name: 'postgres'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lets_go_chat
+    ports:
+      - 5422:5432
+
+  service:
+    container_name: service
+    ports:
+      - 3001:3001
+    build:
+      context: ../
+      dockerfile: ./deploy/Dockerfile
+    restart: on-failure
+    command: ./scripts/wait-for-it.sh postgres:5432 -t 60 -- ./main
