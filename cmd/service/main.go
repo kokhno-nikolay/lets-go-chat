@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"errors"
-	"github.com/kokhno-nikolay/lets-go-chat/internal/service"
 	"log"
 	"net/http"
 	"os"
@@ -15,6 +14,7 @@ import (
 	"github.com/kokhno-nikolay/lets-go-chat/internal/repository"
 	"github.com/kokhno-nikolay/lets-go-chat/internal/repository/postgres"
 	"github.com/kokhno-nikolay/lets-go-chat/internal/server"
+	"github.com/kokhno-nikolay/lets-go-chat/internal/service"
 )
 
 func main() {
@@ -29,8 +29,8 @@ func main() {
 		return
 	}
 
-	_ = repository.NewRepositories(dbClient)
-	services := service.NewServices()
+	repos := repository.NewRepositories(dbClient)
+	services := service.NewServices(service.Deps{Repos: repos})
 	handlers := api.NewHandler(services)
 
 	srv := server.NewServer(cfg, handlers.Init(cfg))

@@ -1,6 +1,11 @@
 package service
 
-import "context"
+import (
+	"context"
+	"github.com/kokhno-nikolay/lets-go-chat/internal/models"
+
+	"github.com/kokhno-nikolay/lets-go-chat/internal/repository"
+)
 
 type UserInput struct {
 	Username string
@@ -8,16 +13,20 @@ type UserInput struct {
 }
 
 type Users interface {
-	SignUp(ctx context.Context, input UserInput) error
-	SignIn(ctx context.Context, input UserInput) error
+	SignUp(ctx context.Context, inp models.User) (string, error)
+	SignIn(ctx context.Context, inp models.User) error
 }
 
 type Services struct {
 	Users Users
 }
 
-func NewServices() *Services {
-	usersService := NewUsersService()
+type Deps struct {
+	Repos *repository.Repositories
+}
+
+func NewServices(deps Deps) *Services {
+	usersService := NewUsersService(deps.Repos.Users)
 
 	return &Services{
 		Users: usersService,

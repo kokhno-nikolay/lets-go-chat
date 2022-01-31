@@ -2,6 +2,9 @@ package postgres
 
 import (
 	"database/sql"
+
+	"github.com/google/uuid"
+
 	"github.com/kokhno-nikolay/lets-go-chat/internal/models"
 )
 
@@ -15,8 +18,8 @@ func NewUserRepo(db *sql.DB) *UsersRepo {
 	}
 }
 
-func (r *UsersRepo) Create(user models.User) error {
-
-	_, err := r.db.Exec(`INSERT INTO users ("username", "password") VALUES ($1, $2)`, user.Username, user.Password)
-	return err
+func (r *UsersRepo) Create(user models.User) (string, error) {
+	uuid := uuid.New().String()
+	_, err := r.db.Exec(`INSERT INTO users ("uuid", "username", "password") VALUES ($1, $2, $3)`, uuid, user.Username, user.Password)
+	return uuid, err
 }

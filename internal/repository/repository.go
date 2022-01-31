@@ -8,7 +8,7 @@ import (
 )
 
 type Users interface {
-	Create(user models.User) error
+	Create(user models.User) (string, error)
 }
 
 type Repositories struct {

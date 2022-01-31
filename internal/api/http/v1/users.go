@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"fmt"
+	"github.com/kokhno-nikolay/lets-go-chat/internal/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,20 +16,27 @@ func (h *Handler) initUsersRoutes(api *gin.RouterGroup) {
 	}
 }
 
-type userSignUpInput struct {
-	Username string `json:"username" binding:"required,min=4,max=64"`
-	Password string `json:"password" binding:"required,min=8,max=64"`
-}
-
 func (h *Handler) userSignUp(c *gin.Context) {
-	var inp userSignUpInput
+	var inp models.User
 	if err := c.BindJSON(&inp); err != nil {
-		newResponse(c, http.StatusBadRequest, statusError, "invalid input body")
+		newResponse(c, http.StatusBadRequest, statusError, "invalid input body", nil)
 
 		return
 	}
 
-	c.Status(http.StatusCreated)
+	uuid, err := h.services.Users.SignUp(c, inp)
+	if err != nil {
+		newResponse(c, http.StatusInternalServerError, statusError,
+			fmt.Sprintf("internal server error. Error: %s", err.Error()),
+			nil,
+		)
+
+		return
+	}
+
+	newResponse(c, http.StatusCreated, statusSuccess, "",
+		models.SignUpResponse{UUID: uuid, Username: inp.Username},
+	)
 }
 
 func (h *Handler) userSignIn(c *gin.Context) {
