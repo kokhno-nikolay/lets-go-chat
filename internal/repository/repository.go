@@ -8,6 +8,7 @@ import (
 )
 
 type Users interface {
+	GetUUID(username string) (string, error)
 	Create(user models.User) (string, error)
 }
 

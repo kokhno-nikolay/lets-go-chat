@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/kokhno-nikolay/lets-go-chat/internal/models"
 
+	"github.com/kokhno-nikolay/lets-go-chat/internal/models"
 	"github.com/kokhno-nikolay/lets-go-chat/internal/repository"
 )
 
@@ -14,7 +14,7 @@ type UserInput struct {
 
 type Users interface {
 	SignUp(ctx context.Context, inp models.User) (string, error)
-	SignIn(ctx context.Context, inp models.User) error
+	SignIn(ctx context.Context, inp models.User) (string, error)
 }
 
 type Services struct {

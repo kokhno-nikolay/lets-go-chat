@@ -2,10 +2,11 @@ package v1
 
 import (
 	"fmt"
-	"github.com/kokhno-nikolay/lets-go-chat/internal/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/kokhno-nikolay/lets-go-chat/internal/models"
 )
 
 func (h *Handler) initUsersRoutes(api *gin.RouterGroup) {
@@ -40,5 +41,24 @@ func (h *Handler) userSignUp(c *gin.Context) {
 }
 
 func (h *Handler) userSignIn(c *gin.Context) {
-	c.Status(http.StatusOK)
+	var inp models.User
+	if err := c.BindJSON(&inp); err != nil {
+		newResponse(c, http.StatusBadRequest, statusError, "invalid input body", nil)
+
+		return
+	}
+
+	uuid, err := h.services.Users.SignIn(c, inp)
+	if err != nil {
+		newResponse(c, http.StatusInternalServerError, statusError,
+			fmt.Sprintf("internal server error. Error: %s", err.Error()),
+			nil,
+		)
+
+		return
+	}
+
+	newResponse(c, http.StatusCreated, statusSuccess, "",
+		models.SignInResponse{UUID: uuid, URL: "http://random-url.com"},
+	)
 }

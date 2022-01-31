@@ -21,10 +21,3 @@ func newResponse(c *gin.Context, statusCode int, status, message string, body in
 	log.Println(message)
 	c.AbortWithStatusJSON(statusCode, response{status, message, body})
 }
-
-//register:
-////	uuid
-////	username
-////
-////login:
-////	url
