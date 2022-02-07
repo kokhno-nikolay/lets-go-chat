@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14.1
+    networks:
+      new:
+        aliases:
+          - database
+    container_name: 'postgres'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lets_go_chat
+    ports:
+      - 5422:5432
+
+  migrate:
+    image: migrate/migrate
+    networks:
+      - new
+    volumes:
+      - ../migrations:/migrations
+    command: ["-path", "/migrations", "-database",  "postgres://postgres:postgres@database:5432/lets_go_chat?sslmode=disable", "up", "2"]
+    links:
+      - postgres
+    restart: on-failure
+
+  service:
+    container_name: service
+    networks:
+      - new
+    ports:
+      - 3001:3001
+    build:
+      context: ../
+      dockerfile: ./deploy/Dockerfile
+    restart: on-failure
+    command: ./scripts/wait-for-it.sh postgres:5432 -t 60 -- ./main
+
+networks:
+  new:
