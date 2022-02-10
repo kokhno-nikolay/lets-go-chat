@@ -23,6 +23,10 @@ func NewHandler(services *service.Services) *Handler {
 func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 	router := gin.Default()
 
+	router.NoRoute(func(context *gin.Context) {
+		context.Status(http.StatusMethodNotAllowed)
+	})
+
 	router.Use(
 		gin.Recovery(),
 		gin.Logger(),
@@ -39,7 +43,7 @@ func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 
 func (h *Handler) initAPI(router *gin.Engine) {
 	handlerV1 := v1.NewHandler(h.services)
-	api := router.Group("/api")
+	api := router.Group("/")
 	{
 		handlerV1.Init(api)
 	}

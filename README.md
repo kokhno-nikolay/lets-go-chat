@@ -8,46 +8,39 @@
 ## ⚡ Quick start
 First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.17` or higher is required.
 
-## 📕 Packages
+## ⚙ Config (.env)
+Create <b>.env</b> file and add the value as in example. 
 
-### • Hasher
-#### Description:
-Package provides the ability to hash and verify hashed passwords for aes standard. <br />
-The **Advanced Encryption Standard (AES)** aka Rijndael is an encryption algorithm created in 2001 by NIST. It uses 128-bit blocks of data to encrypt and is a symmetric block cipher.
+| Name | Type | Example value |
+| ------ | ------ |  ------ |
+| SERVER_PORT | int | 3001 |
+| POSTGRES_HOST_NAME | string | postgres |
+| POSTGRES_PORT | int | 5432 |
+| POSTGRES_USERNAME | string | postgres |
+| POSTGRES_PASSWORD | string | postgres |
+| POSTGRES_DATABASE_NAME | string | lets_go_chat |
 
-#### How to use:
-First, create or generate a secret key. <font color="red">**IMPORTANT:** secret key must be 32 bytes in size.</font><br />
-Also create a password. <font color="yellow">Note: string of any size.</font>
-```go
-secretKey := "di542eX9LzYA38xaH59MhT7Cr4v9cBsP"
-pass := "random-password"
+##🧩 How to run
+1) Clone project
+```
+git clone https://github.com/kokhno-nikolay/lets-go-chat.git
+```
+2) Start docker-compose
+```
+docker-compose -f .\deploy\docker-compose.yml up --build
+```
+or
+```
+make up
 ```
 
-Create a new hasher entity using the constructor and pass the secret key into it:
-```go
-h := hasher.NewHasher(secretKey)
+##  ‍🚀 API
+<b>URL</b> - baseURL/v1/
+1) Registration
 ```
-
-Now you can use hasher methods:
-```go
-h.HashPassword()
-h.CheckHashPassword()
+POST http://localhost:3001/v1/user -H 'Content-Type: application/json' -d '{"username":"someusername","random-password":"mpassword"}'
 ```
-
-Example of hashing a password using a secret key:
-```go
-hash, err := h.HashPassword(pass)
-if err != nil {
-    panic(err.Error())
-}
+2) Login
 ```
-
-Example of comparing a password and its hash::
-```go
-if checkPass := hr.CheckHashPassword(pass, hashPass); checkPass {
-    log.Println("password is correct")
-	//
-	// Some other code...
-	//
-}
+POST http://localhost:3001/v1/user/login -H 'Content-Type: application/json' -d '{"username":"someusername","password":"random-password"}'
 ```

@@ -10,10 +10,10 @@ import (
 )
 
 func (h *Handler) initUsersRoutes(api *gin.RouterGroup) {
-	users := api.Group("/users")
+	users := api.Group("/user")
 	{
-		users.POST("/sign-up", h.userSignUp)
-		users.POST("/sign-in", h.userSignIn)
+		users.POST("/", h.userSignUp)
+		users.POST("/login", h.userSignIn)
 	}
 }
 
