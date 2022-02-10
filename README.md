@@ -38,7 +38,7 @@ make up
 <b>URL</b> - baseURL/v1/
 1) Registration
 ```
-POST http://localhost:3001/v1/user -H 'Content-Type: application/json' -d '{"username":"someusername","random-password":"mpassword"}'
+POST http://localhost:3001/v1/user -H 'Content-Type: application/json' -d '{"username":"someusername","password":"random-password"}'
 ```
 2) Login
 ```
