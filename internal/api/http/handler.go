@@ -23,9 +23,7 @@ func NewHandler(services *service.Services) *Handler {
 func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 	router := gin.Default()
 
-	router.NoRoute(func(context *gin.Context) {
-		context.Status(http.StatusMethodNotAllowed)
-	})
+	router.HandleMethodNotAllowed = true
 
 	router.Use(
 		gin.Recovery(),
