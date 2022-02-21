@@ -59,6 +59,6 @@ func (h *Handler) userSignIn(c *gin.Context) {
 	}
 
 	newResponse(c, http.StatusCreated, statusSuccess, "",
-		models.SignInResponse{UUID: uuid, URL: "http://random-url.com"},
+		models.SignInResponse{UUID: uuid, URL: "ws://localhost:3001/ws"},
 	)
 }
