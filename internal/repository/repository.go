@@ -12,20 +12,19 @@ type Users interface {
 	Create(user models.User) (string, error)
 }
 
-type ActiveUsers interface {
-	Count() (int, error)
-	Add() error
-	Delete() error
+type Messages interface {
+	GetAll() ([]models.Message, error)
+	Create(message models.Message) error
 }
 
 type Repositories struct {
-	Users       Users
-	ActiveUsers ActiveUsers
+	Users    Users
+	Messages Messages
 }
 
 func NewRepositories(db *sql.DB) *Repositories {
 	return &Repositories{
-		Users:       postgres.NewUserRepo(db),
-		ActiveUsers: postgres.NewActiveUsersRepo(db),
+		Users:    postgres.NewUserRepo(db),
+		Messages: postgres.NewMessageRepo(db),
 	}
 }
