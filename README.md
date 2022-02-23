@@ -15,13 +15,14 @@ Create <b>.env</b> file and add the value as in example.
 |------------------------| ------ |  ------ |
 | SERVER_PORT            | int | 3001 |
 | SERVER_HOST            | string| localhost |
+| SECRET_KEY | string | secret |
 | POSTGRES_HOST_NAME     | string | postgres |
 | POSTGRES_PORT          | int | 5432 |
 | POSTGRES_USERNAME      | string | postgres |
 | POSTGRES_PASSWORD      | string | postgres |
 | POSTGRES_DATABASE_NAME | string | lets_go_chat |
 
-##🧩 How to run
+## 🧩 How to run
 1) Clone project
 ```
 git clone https://github.com/kokhno-nikolay/lets-go-chat.git
