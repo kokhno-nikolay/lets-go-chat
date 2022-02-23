@@ -12,6 +12,5 @@ type SignUpResponse struct {
 }
 
 type SignInResponse struct {
-	URL  string `json:"url"`
-	UUID string `json:"uuid"`
+	URL string `json:"url"`
 }

@@ -12,6 +12,9 @@ type Users interface {
 	Create(user models.User) (string, error)
 }
 
+type JWT interface {
+}
+
 type Messages interface {
 	GetAll() ([]models.Message, error)
 	Create(message models.Message) error
@@ -19,12 +22,14 @@ type Messages interface {
 
 type Repositories struct {
 	Users    Users
+	JWT      JWT
 	Messages Messages
 }
 
 func NewRepositories(db *sql.DB) *Repositories {
 	return &Repositories{
 		Users:    postgres.NewUserRepo(db),
+		JWT:      postgres.NewJWTRepo(db),
 		Messages: postgres.NewMessageRepo(db),
 	}
 }
