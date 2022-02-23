@@ -11,13 +11,14 @@ First of all, [download](https://golang.org/dl/) and install **Go**. Version `1.
 ## ⚙ Config (.env)
 Create <b>.env</b> file and add the value as in example. 
 
-| Name | Type | Example value |
-| ------ | ------ |  ------ |
-| SERVER_PORT | int | 3001 |
-| POSTGRES_HOST_NAME | string | postgres |
-| POSTGRES_PORT | int | 5432 |
-| POSTGRES_USERNAME | string | postgres |
-| POSTGRES_PASSWORD | string | postgres |
+| Name                   | Type | Example value |
+|------------------------| ------ |  ------ |
+| SERVER_PORT            | int | 3001 |
+| SERVER_HOST            | string| localhost |
+| POSTGRES_HOST_NAME     | string | postgres |
+| POSTGRES_PORT          | int | 5432 |
+| POSTGRES_USERNAME      | string | postgres |
+| POSTGRES_PASSWORD      | string | postgres |
 | POSTGRES_DATABASE_NAME | string | lets_go_chat |
 
 ##🧩 How to run
@@ -43,4 +44,12 @@ POST http://localhost:3001/v1/user -H 'Content-Type: application/json' -d '{"use
 2) Login
 ```
 POST http://localhost:3001/v1/user/login -H 'Content-Type: application/json' -d '{"username":"someusername","password":"random-password"}'
+```
+3) Active
+```
+GET http://localhost:3001/v1/user/active -H 'Content-Type: application/json
+```
+4) Websocket chat
+```
+ws://localhost:3001/ws?token=<jwt-token>
 ```

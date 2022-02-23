@@ -24,6 +24,7 @@ type Config struct {
 	PostgresUsername     string `env:"POSTGRES_USERNAME" envDefault:"postgres"`
 	PostgresPassword     string `env:"POSTGRES_PASSWORD" envDefault:"postgres"`
 	PostgresDatabaseName string `env:"POSTGRES_DATABASE_NAME" envDefault:"lets_go_chat"`
+	SecretKey            string `env:"SECRET_KEY" envDefault:"secret"`
 }
 
 func (c *Config) String() string {
