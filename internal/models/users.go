@@ -4,6 +4,7 @@ type User struct {
 	Username string `json:"username" binding:"required,min=4,max=64"`
 	Password string `json:"password" binding:"required,min=8,max=64"`
 	UUID     string `json:"uuid,omitempty"`
+	Active   bool   `json:"active,omitempty"`
 }
 
 type SignUpResponse struct {

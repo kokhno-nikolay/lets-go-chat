@@ -23,9 +23,9 @@ func (h *WSHandler) Chat(w http.ResponseWriter, r *http.Request) {
 		log.Println("Failed to set websocket upgrade: %+v", err)
 		return
 	}
-	h.services.ActiveUsers.Add()
+	h.services.ActiveUsers.Add(0)
 	defer ws.Close()
-	defer h.services.ActiveUsers.Remove()
+	defer h.services.ActiveUsers.Remove(0)
 
 	reader(ws)
 }

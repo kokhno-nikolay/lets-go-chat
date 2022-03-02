@@ -12,6 +12,12 @@ type Users interface {
 	Create(user models.User) (string, error)
 }
 
+type ActiveUsers interface {
+	GetAllActive() ([]models.User, error)
+	SwitchToActive(userID int) error
+	SwitchToInactive(userID int) error
+}
+
 type JWT interface {
 }
 
@@ -21,15 +27,17 @@ type Messages interface {
 }
 
 type Repositories struct {
-	Users    Users
-	JWT      JWT
-	Messages Messages
+	Users       Users
+	ActiveUsers ActiveUsers
+	JWT         JWT
+	Messages    Messages
 }
 
 func NewRepositories(db *sql.DB) *Repositories {
 	return &Repositories{
-		Users:    postgres.NewUserRepo(db),
-		JWT:      postgres.NewJWTRepo(db),
-		Messages: postgres.NewMessageRepo(db),
+		Users:       postgres.NewUserRepo(db),
+		ActiveUsers: postgres.NewUserRepo(db),
+		JWT:         postgres.NewJWTRepo(db),
+		Messages:    postgres.NewMessageRepo(db),
 	}
 }

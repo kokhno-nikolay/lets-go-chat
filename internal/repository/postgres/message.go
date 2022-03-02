@@ -26,7 +26,7 @@ func (r *MessageRepo) GetAll() ([]models.Message, error) {
 
 	for rows.Next() {
 		message := models.Message{}
-		if err := rows.Scan(&message.ID, &message.Text, &message.UserUUID); err != nil {
+		if err := rows.Scan(&message.ID, &message.Text, &message.UserID); err != nil {
 			return nil, err
 		}
 		messages = append(messages, message)
@@ -39,6 +39,6 @@ func (r *MessageRepo) GetAll() ([]models.Message, error) {
 }
 
 func (r *MessageRepo) Create(message models.Message) error {
-	_, err := r.db.Exec(`INSERT INTO messages ("id", "text", "user_id") VALUES ($1, $2, $3)`, message.ID, message.Text, message.UserUUID)
+	_, err := r.db.Exec(`INSERT INTO messages ("id", "text", "user_id") VALUES ($1, $2, $3)`, message.ID, message.Text, message.UserID)
 	return err
 }

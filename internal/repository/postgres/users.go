@@ -31,3 +31,36 @@ func (r *UsersRepo) Create(user models.User) (string, error) {
 	_, err := r.db.Exec(`INSERT INTO users ("uuid", "username", "password") VALUES ($1, $2, $3)`, uuid, user.Username, user.Password)
 	return uuid, err
 }
+
+func (r *UsersRepo) GetAllActive() ([]models.User, error) {
+	activeUsers := []models.User{}
+
+	rows, err := r.db.Query("SELECT uuid, username, password, active FROM users WHERE active = true")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		activeUser := models.User{}
+		if err := rows.Scan(&activeUser.UUID, &activeUser.Username, &activeUser.Password, &activeUser.Active); err != nil {
+			return nil, err
+		}
+		activeUsers = append(activeUsers, activeUser)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return activeUsers, err
+}
+
+func (r *UsersRepo) SwitchToActive(userID int) error {
+	_, err := r.db.Exec("UPDATE users SET active = true WHERE id = $1", userID)
+	return err
+}
+
+func (r *UsersRepo) SwitchToInactive(userID int) error {
+	_, err := r.db.Exec("UPDATE users SET active = false WHERE id = $1", userID)
+	return err
+}

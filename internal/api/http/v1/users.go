@@ -67,5 +67,10 @@ func (h *Handler) userSignIn(c *gin.Context) {
 }
 
 func (h *Handler) activeUsers(c *gin.Context) {
-	c.String(http.StatusOK, strconv.Itoa(h.services.ActiveUsers.Get()))
+	users, err := h.services.ActiveUsers.Get()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "internal server error")
+	}
+
+	c.String(http.StatusOK, strconv.Itoa(users))
 }
