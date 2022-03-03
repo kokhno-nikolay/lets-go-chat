@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	cors "github.com/rs/cors/wrapper/gin"
 
 	v1 "github.com/kokhno-nikolay/lets-go-chat/internal/api/http/v1"
 	"github.com/kokhno-nikolay/lets-go-chat/internal/config"
@@ -29,6 +30,7 @@ func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 	router.Use(
 		gin.Recovery(),
 		gin.Logger(),
+		cors.Default(),
 	)
 
 	router.GET("/ping", func(c *gin.Context) {
@@ -47,7 +49,13 @@ func (h *Handler) Init(cfg *config.Config) *gin.Engine {
 			c.String(http.StatusForbidden, "bad auth token")
 			return
 		}
-		ws.Chat(c.Writer, c.Request)
+
+		claims, ok := h.services.JWT.ExtractClaims(token)
+		if !ok {
+			c.String(http.StatusInternalServerError, "jwt claims not found")
+		}
+
+		ws.Chat(c.Writer, c.Request, claims["uuid"].(string))
 	})
 
 	h.initAPI(router)

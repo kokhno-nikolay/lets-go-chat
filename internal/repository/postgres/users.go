@@ -55,12 +55,12 @@ func (r *UsersRepo) GetAllActive() ([]models.User, error) {
 	return activeUsers, err
 }
 
-func (r *UsersRepo) SwitchToActive(userID int) error {
-	_, err := r.db.Exec("UPDATE users SET active = true WHERE id = $1", userID)
+func (r *UsersRepo) SwitchToActive(userUUID string) error {
+	_, err := r.db.Exec("UPDATE users SET active = true WHERE uuid = $1", userUUID)
 	return err
 }
 
-func (r *UsersRepo) SwitchToInactive(userID int) error {
-	_, err := r.db.Exec("UPDATE users SET active = false WHERE id = $1", userID)
+func (r *UsersRepo) SwitchToInactive(userUUID string) error {
+	_, err := r.db.Exec("UPDATE users SET active = false WHERE uuid = $1", userUUID)
 	return err
 }

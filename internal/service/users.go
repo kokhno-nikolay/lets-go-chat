@@ -26,7 +26,8 @@ func (u *UsersService) SignUp(ctx context.Context, user models.User) (string, er
 	return uuid, nil
 }
 
-func (u *UsersService) SignIn(ctx context.Context, user models.User) (string, error) {
+func (u *UsersService) SignIn(ctx context.Context, user models.User) (models.User, error) {
 	uuid, err := u.repo.GetUUID(user.Username)
-	return uuid, err
+	user.UUID = uuid
+	return user, err
 }

@@ -17,10 +17,10 @@ func (s *ActiveUsersService) Get() (int, error) {
 	return len(activeUsers), err
 }
 
-func (s *ActiveUsersService) Add(userId int) error {
-	return s.repo.SwitchToActive(userId)
+func (s *ActiveUsersService) Add(userUUID string) error {
+	return s.repo.SwitchToActive(userUUID)
 }
 
-func (s *ActiveUsersService) Remove(userId int) error {
-	return s.repo.SwitchToInactive(userId)
+func (s *ActiveUsersService) Remove(userUUID string) error {
+	return s.repo.SwitchToInactive(userUUID)
 }

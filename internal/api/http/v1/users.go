@@ -51,7 +51,7 @@ func (h *Handler) userSignIn(c *gin.Context) {
 		return
 	}
 
-	uuid, err := h.services.Users.SignIn(c, inp)
+	user, err := h.services.Users.SignIn(c, inp)
 	if err != nil {
 		newResponse(c, http.StatusInternalServerError, statusError,
 			fmt.Sprintf("internal server error. Error: %s", err.Error()),
@@ -61,7 +61,7 @@ func (h *Handler) userSignIn(c *gin.Context) {
 		return
 	}
 
-	jwsToken := h.services.JWT.GenerateToken(uuid)
+	jwsToken := h.services.JWT.GenerateToken(user.UUID, user.Username)
 	wsURL := fmt.Sprintf("ws://%s:%s/ws?token=%s", cfg.ServerHost, cfg.ServerPort, jwsToken)
 	c.JSON(http.StatusOK, models.SignInResponse{URL: wsURL})
 }

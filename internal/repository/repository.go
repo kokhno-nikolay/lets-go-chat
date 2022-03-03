@@ -14,8 +14,8 @@ type Users interface {
 
 type ActiveUsers interface {
 	GetAllActive() ([]models.User, error)
-	SwitchToActive(userID int) error
-	SwitchToInactive(userID int) error
+	SwitchToActive(userUUID string) error
+	SwitchToInactive(userUUID string) error
 }
 
 type JWT interface {

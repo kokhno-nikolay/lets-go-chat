@@ -16,18 +16,19 @@ type UserInput struct {
 
 type Users interface {
 	SignUp(ctx context.Context, inp models.User) (string, error)
-	SignIn(ctx context.Context, inp models.User) (string, error)
+	SignIn(ctx context.Context, inp models.User) (models.User, error)
 }
 
 type ActiveUsers interface {
 	Get() (int, error)
-	Add(userId int) error
-	Remove(userId int) error
+	Add(userUUID string) error
+	Remove(userUUID string) error
 }
 
 type JWT interface {
-	GenerateToken(uuid string) string
+	GenerateToken(uuid, username string) string
 	ValidateToken(token string) (*jwt.Token, error)
+	ExtractClaims(tokenStr string) (jwt.MapClaims, bool)
 }
 
 type Messages interface {

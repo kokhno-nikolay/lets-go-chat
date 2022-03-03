@@ -13,7 +13,7 @@ var wsUpgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-func (h *WSHandler) Chat(w http.ResponseWriter, r *http.Request) {
+func (h *WSHandler) Chat(w http.ResponseWriter, r *http.Request, userUUID string) {
 	wsUpgrader.CheckOrigin = func(r *http.Request) bool {
 		return true
 	}
@@ -23,9 +23,9 @@ func (h *WSHandler) Chat(w http.ResponseWriter, r *http.Request) {
 		log.Println("Failed to set websocket upgrade: %+v", err)
 		return
 	}
-	h.services.ActiveUsers.Add(0)
+	h.services.ActiveUsers.Add(userUUID)
 	defer ws.Close()
-	defer h.services.ActiveUsers.Remove(0)
+	defer h.services.ActiveUsers.Remove(userUUID)
 
 	reader(ws)
 }
